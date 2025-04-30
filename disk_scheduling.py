@@ -1,12 +1,5 @@
 def SCAN(cylinders, current_pos, queue):
-    """
-    SCAN (Elevator) disk scheduling algorithm
-    Returns:
-        dict: {
-            'sequence': list of served requests in order,
-            'total_distance': total seek distance
-        }
-    """
+    
     # Sort the queue
     queue = sorted(queue)
     
@@ -49,14 +42,7 @@ def SCAN(cylinders, current_pos, queue):
     }
 
 def LOOK(cylinders, current_pos, queue):
-    """
-    LOOK disk scheduling algorithm
-    Returns:
-        dict: {
-            'sequence': list of served requests in order,
-            'total_distance': total seek distance
-        }
-    """
+    
     # Sort the queue
     queue = sorted(queue)
     
