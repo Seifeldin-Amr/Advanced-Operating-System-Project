@@ -1,0 +1,4 @@
+numpy>=1.21.0
+matplotlib>=3.4.0
+PyQt6>=6.4.0
+qt-material>=2.14 
