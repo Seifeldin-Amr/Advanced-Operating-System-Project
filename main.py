@@ -316,104 +316,61 @@ class VirtualMemoryWindow(QMainWindow):
         for i in reversed(range(self.visualization_widget.layout().count())): 
             self.visualization_widget.layout().itemAt(i).widget().setParent(None)
         
-        # Create new figure with two subplots
-        fig = plt.figure(figsize=(16, 10))  # Increased figure size
-        
-        # Main grid subplot
-        ax1 = plt.subplot2grid((5, 1), (0, 0), rowspan=4)  # Increased rowspan
-        sequence = results['sequence']
-        frames = len(sequence[0])
-        steps = len(sequence)
-        access_type = results['access_type']
-        ref_string = results['ref_string']
-        
-        # Check if this is Second Chance algorithm
-        is_second_chance = 'reference_bits' in results
-        ref_bits = results.get('reference_bits', None)
-        
-        # Create a grid with more padding
-        ax1.set_xlim(-1, steps)  # Added padding on both sides
-        ax1.set_ylim(frames - 0.5, -2.2 if is_second_chance else -1.8)  # Extra space for ref bits
-        
-        # Remove axis lines and ticks but keep bottom border
-        ax1.spines['top'].set_visible(False)
-        ax1.spines['right'].set_visible(False)
-        ax1.spines['bottom'].set_visible(True)  # Keep bottom border
-        ax1.spines['left'].set_visible(False)
-        ax1.set_xticks([])
-        ax1.set_yticks([])
-        
-        # Plot reference string and hit/fault indicators at the top
-        for i in range(steps):
-            # Status indicator
-            color = '#117711' if access_type[i] else '#990000'
-            indicator = 'H' if access_type[i] else 'F'
-            ax1.text(i, -1.2, indicator, ha='center', va='center', 
-                    fontsize=12, color=color, fontweight='bold')
-            
-            # Reference string - show the actual reference value
-            ref_value = ref_string[i] if i < len(ref_string) else sequence[i][-1]
-            ax1.text(i, -0.8, str(ref_value), ha='center', va='center',
-                    fontsize=12, fontweight='bold')
-            
-            # Add reference bits for Second Chance
-          
-               
-        
-        # Plot grid cells with pages
-        for step in range(steps):
-            for frame in range(frames):
-                page = sequence[step][frame]
-                if page is not None:
-                    # Draw cell with brighter colors
-                    color = '#AAFFAA' if access_type[step] else '#FFAAAA'  # Lighter pastel colors
-                    rect = plt.Rectangle((step - 0.4, frame - 0.4), 0.8, 0.8, 
-                                      fill=True, facecolor=color, 
-                                      edgecolor='black', alpha=0.7)
-                    ax1.add_patch(rect)
-                    # Add page number
-                    ax1.text(step, frame, str(page), ha='center', va='center', 
-                           fontsize=12, fontweight='bold')
-                    
-                    # Add reference bit indicator for Second Chance
-                    if is_second_chance and ref_bits[step][frame] == 1:
-                        ax1.text(step + 0.3, frame - 0.3, "★", ha='center', va='center',
-                                fontsize=8, color='#0000FF')
-                
-                # Draw cell borders
-                rect = plt.Rectangle((step - 0.5, frame - 0.5), 1, 1, 
-                                   fill=False, edgecolor='black', linewidth=0.5)
-                ax1.add_patch(rect)
-        
-        # Add labels with more spacing
-        ax1.text(-0.8, -0.8, "Ref:", ha='right', va='center', fontsize=12, fontweight='bold')
-        ax1.text(-0.8, -1.2, "Status:", ha='right', va='center', fontsize=12, fontweight='bold')
-        
-        # Add legend subplot
-        ax2 = plt.subplot2grid((5, 1), (4, 0))
-        ax2.axis('off')
-        
-        # Create legend boxes with more spacing
-        legend_x = 0.2  # Moved legend more to the left
-        ax2.add_patch(plt.Rectangle((legend_x, 0.5), 0.1, 0.3, facecolor='#AAFFAA', alpha=0.7))
-        ax2.text(legend_x + 0.15, 0.65, "Hit", va='center', fontsize=12)
-        
-        ax2.add_patch(plt.Rectangle((legend_x + 0.3, 0.5), 0.1, 0.3, facecolor='#FFAAAA', alpha=0.7))
-        ax2.text(legend_x + 0.45, 0.65, "Fault", va='center', fontsize=12)
-        
-        # Add Second Chance specific legend
-        if is_second_chance:
-            ax2.text(legend_x + 0.7, 0.65, "★ = Second Chance (Ref bit = 1)", va='center', fontsize=12, color='#0000FF')
-        
-        # Set aspect ratio to be equal for main grid
-        ax1.set_aspect('equal')
-        
-        # Adjust layout with more padding
-        plt.subplots_adjust(left=0.1, right=0.9, top=0.95, bottom=0.1, hspace=0.2)  # Increased hspace
-        
-        # Create canvas and add to widget
+        # Create new figure
+        fig = plt.figure(figsize=(12, 6))
         canvas = FigureCanvas(fig)
         self.visualization_widget.layout().addWidget(canvas)
+        
+        ax = fig.add_subplot(111)
+        sequence = results['sequence']
+        
+        # Get the full range of cylinders
+        cylinders = int(self.frames_input.text())
+        
+        # Create positions list including 0 and max cylinder
+        positions = sorted(set([0, cylinders - 1] + list(sequence)))
+        x_positions = np.linspace(0, 1, len(positions))
+        pos_to_x = dict(zip(positions, x_positions))
+        
+        # Add cylinder numbers at the top
+        for pos, x in zip(positions, x_positions):
+            ax.text(x, 1.1, str(pos), ha='center', va='bottom', color='orange', fontsize=10)
+        
+        # Plot the movement pattern
+        x_coords = []
+        y_coords = []
+        y_spacing = 0.05  # Vertical spacing between points
+        current_y = 0.8  # Starting y position
+        
+        # First point
+        x_coords.append(pos_to_x[sequence[0]])
+        y_coords.append(current_y)
+        
+        # Plot each segment
+        for i in range(1, len(sequence)):
+            current_y -= y_spacing
+            x_coords.append(pos_to_x[sequence[i]])
+            y_coords.append(current_y)
+        
+        # Plot lines and dots
+        ax.plot(x_coords, y_coords, 'k-', linewidth=1)
+        ax.plot(x_coords, y_coords, 'ko', markersize=8)
+        
+        # Clean up the plot
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        
+        # Set view limits
+        ax.set_xlim(-0.05, 1.05)
+        ax.set_ylim(0.2, 1.2)
+        
+        # Adjust layout
+        plt.subplots_adjust(left=0.02, right=0.98, top=0.95, bottom=0.05)
+        
         canvas.draw()
     
     def reset(self):
@@ -674,13 +631,53 @@ class DiskSchedulingWindow(QMainWindow):
         
         ax = fig.add_subplot(111)
         sequence = results['sequence']
-        x = range(len(sequence))
         
-        ax.plot(x, sequence, 'b-o')
-        ax.set_xlabel('Step')
-        ax.set_ylabel('Cylinder Position')
-        ax.set_title('Disk Scheduling Sequence')
-        ax.grid(True)
+        # Get the full range of cylinders
+        cylinders = int(self.cylinders_input.text())
+        
+        # Create positions list including 0 and max cylinder
+        positions = sorted(set([0, cylinders - 1] + list(sequence)))
+        x_positions = np.linspace(0, 1, len(positions))
+        pos_to_x = dict(zip(positions, x_positions))
+        
+        # Add cylinder numbers at the top
+        for pos, x in zip(positions, x_positions):
+            ax.text(x, 1.1, str(pos), ha='center', va='bottom', color='orange', fontsize=10)
+        
+        # Plot the movement pattern
+        x_coords = []
+        y_coords = []
+        y_spacing = 0.05  # Vertical spacing between points
+        current_y = 0.8  # Starting y position
+        
+        # First point
+        x_coords.append(pos_to_x[sequence[0]])
+        y_coords.append(current_y)
+        
+        # Plot each segment
+        for i in range(1, len(sequence)):
+            current_y -= y_spacing
+            x_coords.append(pos_to_x[sequence[i]])
+            y_coords.append(current_y)
+        
+        # Plot lines and dots
+        ax.plot(x_coords, y_coords, 'k-', linewidth=1)
+        ax.plot(x_coords, y_coords, 'ko', markersize=8)
+        
+        # Clean up the plot
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        
+        # Set view limits
+        ax.set_xlim(-0.05, 1.05)
+        ax.set_ylim(0.2, 1.2)
+        
+        # Adjust layout
+        plt.subplots_adjust(left=0.02, right=0.98, top=0.95, bottom=0.05)
         
         canvas.draw()
     

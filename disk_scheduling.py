@@ -19,10 +19,12 @@ def SCAN(cylinders, current_pos, queue):
             
             # Check if we hit a boundary
             if current >= cylinders:
+                sequence.append(cylinders - 1)  # Add boundary position to sequence
                 current = cylinders - 1
                 direction = -1
                 break
             elif current < 0:
+                sequence.append(0)  # Add boundary position to sequence
                 current = 0
                 direction = 1
                 break
