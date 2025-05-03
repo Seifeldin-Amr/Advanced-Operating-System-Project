@@ -940,13 +940,53 @@ class MainWindow(QMainWindow):
         
         ax = fig.add_subplot(111)
         sequence = results['sequence']
-        x = range(len(sequence))
         
-        ax.plot(x, sequence, 'b-o')
-        ax.set_xlabel('Step')
-        ax.set_ylabel('Cylinder Position')
-        ax.set_title('Disk Scheduling Sequence')
-        ax.grid(True)
+        # Get the full range of cylinders
+        cylinders = int(self.cylinders_input.text())
+        
+        # Create positions list including 0 and max cylinder
+        positions = sorted(set([0, cylinders - 1] + list(sequence)))
+        x_positions = np.linspace(0, 1, len(positions))
+        pos_to_x = dict(zip(positions, x_positions))
+        
+        # Add cylinder numbers at the top
+        for pos, x in zip(positions, x_positions):
+            ax.text(x, 1.1, str(pos), ha='center', va='bottom', color='orange', fontsize=10)
+        
+        # Plot the movement pattern
+        x_coords = []
+        y_coords = []
+        y_spacing = 0.05  # Vertical spacing between points
+        current_y = 0.8  # Starting y position
+        
+        # First point
+        x_coords.append(pos_to_x[sequence[0]])
+        y_coords.append(current_y)
+        
+        # Plot each segment
+        for i in range(1, len(sequence)):
+            current_y -= y_spacing
+            x_coords.append(pos_to_x[sequence[i]])
+            y_coords.append(current_y)
+        
+        # Plot lines and dots
+        ax.plot(x_coords, y_coords, 'k-', linewidth=1)
+        ax.plot(x_coords, y_coords, 'ko', markersize=8)
+        
+        # Clean up the plot
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        
+        # Set view limits
+        ax.set_xlim(-0.05, 1.05)
+        ax.set_ylim(0.2, 1.2)
+        
+        # Adjust layout
+        plt.subplots_adjust(left=0.02, right=0.98, top=0.95, bottom=0.05)
         
         canvas.draw()
 
