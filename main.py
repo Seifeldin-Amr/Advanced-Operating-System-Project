@@ -909,11 +909,12 @@ class MainWindow(QMainWindow):
                 raise ValueError("All queue values must be between 0 and number of cylinders")
             
             algorithm = "SCAN" if self.scan_radio.isChecked() else "LOOK"
+            direction = "right"  # Default direction
             
             if algorithm == "SCAN":
-                results = SCAN(cylinders, current_pos, queue)
+                results = SCAN(queue, current_pos, cylinders, direction)
             else:
-                results = LOOK(cylinders, current_pos, queue)
+                results = LOOK(queue, current_pos, direction)
             
             self.display_ds_results(results)
             
@@ -922,7 +923,7 @@ class MainWindow(QMainWindow):
 
     def display_ds_results(self, results):
         self.ds_results_text.clear()
-        self.ds_results_text.append(f"Total Seek Distance: {results['total_distance']}")
+        self.ds_results_text.append(f"Total Seek Distance: {results['seek_distance']}")
         self.ds_results_text.append("Order of Served Requests:")
         self.ds_results_text.append(str(results['sequence']))
         
