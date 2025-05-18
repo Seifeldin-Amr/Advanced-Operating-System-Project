@@ -26,23 +26,22 @@ class MainWindow(QMainWindow):
             }
         """)
         
-        # Create main widget and layout
+      
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
         main_layout = QVBoxLayout(main_widget)
         main_layout.setContentsMargins(40, 40, 40, 40)
         main_layout.setSpacing(30)
         
-        # Create stacked widget to hold all pages
+       
         self.stacked_widget = QStackedWidget()
         
-        # Create home page
         home_page = QWidget()
         home_layout = QVBoxLayout(home_page)
         home_layout.setContentsMargins(0, 0, 0, 0)
         home_layout.setSpacing(30)
         
-        # Header container with shadow effect
+      
         header_container = QFrame()
         header_container.setStyleSheet("""
             QFrame {
@@ -55,45 +54,45 @@ class MainWindow(QMainWindow):
         header_layout = QVBoxLayout(header_container)
         header_layout.setSpacing(15)
         
-        # Title with icon
+       
         title_layout = QHBoxLayout()
         icon_label = QLabel()
 
-        # Create a custom computer icon
+   
         pixmap = QPixmap(48, 48)
-        pixmap.fill(Qt.GlobalColor.transparent)  # Start with transparent background
+        pixmap.fill(Qt.GlobalColor.transparent)  
         painter = QPainter(pixmap)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        # Draw monitor
+      
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(QColor("#1565C0"))  # Blue color matching title
-        painter.drawRoundedRect(4, 4, 40, 26, 2, 2)  # Monitor body
+        painter.setBrush(QColor("#1565C0"))  
+        painter.drawRoundedRect(4, 4, 40, 26, 2, 2)  
 
-        # Draw screen
-        painter.setBrush(QColor("#e0f7fa"))  # Light blue screen
-        painter.drawRect(8, 8, 32, 18)  # Screen area
+       
+        painter.setBrush(QColor("#e0f7fa"))  
+        painter.drawRect(8, 8, 32, 18)  
 
-        # Draw CPU/tower
-        painter.setBrush(QColor("#1565C0"))  # Blue color matching title
-        painter.drawRoundedRect(16, 30, 16, 14, 2, 2)  # Tower base
+        
+        painter.setBrush(QColor("#1565C0"))  
+        painter.drawRoundedRect(16, 30, 16, 14, 2, 2) 
 
-        # Draw keyboard
-        painter.setBrush(QColor("#78909c"))  # Gray color for keyboard
-        painter.drawRoundedRect(10, 44, 28, 3, 1, 1)  # Keyboard
 
-        # Draw details on tower
+        painter.setBrush(QColor("#78909c"))  
+        painter.drawRoundedRect(10, 44, 28, 3, 1, 1) 
+
+       
         painter.setPen(QPen(QColor("#e0f7fa"), 1))
-        painter.drawLine(20, 34, 28, 34)  # Power button
-        painter.drawLine(20, 38, 28, 38)  # Disk drive
+        painter.drawLine(20, 34, 28, 34)  
+        painter.drawLine(20, 38, 28, 38) 
 
-        # Add circuit pattern on screen
+       
         painter.setPen(QPen(QColor("#0d47a1"), 1))
-        painter.drawLine(14, 17, 22, 17)  # Horizontal line
-        painter.drawLine(34, 13, 34, 21)  # Vertical line
-        painter.drawLine(26, 13, 26, 21)  # Vertical line
-        painter.drawLine(26, 13, 34, 13)  # Horizontal line
-        painter.drawLine(26, 21, 34, 21)  # Horizontal line
+        painter.drawLine(14, 17, 22, 17)
+        painter.drawLine(34, 13, 34, 21)  
+        painter.drawLine(26, 13, 26, 21)  
+        painter.drawLine(26, 13, 34, 13)  
+        painter.drawLine(26, 21, 34, 21)
 
         painter.end()
         icon_label.setPixmap(pixmap)
@@ -129,21 +128,21 @@ class MainWindow(QMainWindow):
         vm_layout.setSpacing(15)
         
         vm_icon = QLabel()
-        # Create a colored square with a memory icon
+      
         pixmap = QPixmap(64, 64)
-        pixmap.fill(Qt.GlobalColor.transparent)  # Start with transparent background
+        pixmap.fill(Qt.GlobalColor.transparent) 
         painter = QPainter(pixmap)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-        # Draw memory chip representation
+       
         painter.setPen(Qt.PenStyle.SolidLine)
-        painter.setBrush(QColor("#2196F3"))  # Blue color for the chip
+        painter.setBrush(QColor("#2196F3"))  
         painter.setBrush(QColor("white"))
-        # Main chip body
+       
         painter.drawRect(8, 12, 48, 40)
-        # Pins on chip
+      
         for i in range(6):
-            painter.drawRect(10 + i*8, 6, 4, 6)  # Top pins
-            painter.drawRect(10 + i*8, 52, 4, 6)  # Bottom pins
+            painter.drawRect(10 + i*8, 6, 4, 6)  
+            painter.drawRect(10 + i*8, 52, 4, 6)  
         painter.end()
         vm_icon.setPixmap(pixmap)
         vm_icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -177,7 +176,7 @@ class MainWindow(QMainWindow):
         vm_button.clicked.connect(self.show_virtual_memory)
         buttons_layout.addWidget(vm_button)
         
-        # Disk Scheduling button with icon and shadow
+       
         ds_button = QPushButton()
         ds_button.setMinimumSize(300, 200)
         ds_layout = QVBoxLayout(ds_button)
@@ -185,40 +184,40 @@ class MainWindow(QMainWindow):
         ds_layout.setSpacing(15)
         
         ds_icon = QLabel()
-        # Create a custom hard drive icon
+       
         pixmap = QPixmap(64, 64)
-        pixmap.fill(Qt.GlobalColor.transparent)  # Start with transparent background
+        pixmap.fill(Qt.GlobalColor.transparent)  
         painter = QPainter(pixmap)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        # Draw hard drive body
+      
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(QColor("white"))
-        painter.drawRoundedRect(4, 8, 56, 48, 4, 4)  # Main hard drive body
+        painter.drawRoundedRect(4, 8, 56, 48, 4, 4)  
 
-        # Add drive details
+       
         painter.setPen(QPen(QColor("#333333"), 1))
-        # Activity light
-        painter.setBrush(QColor("#4CAF50"))  # Green LED
-        painter.drawRect(48, 16, 6, 4)  # Activity LED
+        
+        painter.setBrush(QColor("#4CAF50"))  
+        painter.drawRect(48, 16, 6, 4)  
 
         # Disk platters
-        painter.setBrush(QColor("#e0e0e0"))  # Light gray for platters
-        painter.drawEllipse(12, 16, 32, 32)  # Outer disk
-        painter.setBrush(QColor("#cccccc"))  # Darker gray for inner platter
-        painter.drawEllipse(20, 24, 16, 16)  # Inner disk
-        painter.setBrush(QColor("#999999"))  # Even darker for center
-        painter.drawEllipse(26, 30, 4, 4)  # Center spindle
+        painter.setBrush(QColor("#e0e0e0"))  
+        painter.drawEllipse(12, 16, 32, 32)  
+        painter.setBrush(QColor("#cccccc"))  
+        painter.drawEllipse(20, 24, 16, 16)  
+        painter.setBrush(QColor("#999999"))  
+        painter.drawEllipse(26, 30, 4, 4)  
 
         # Add magnetic arm
-        painter.setPen(QPen(QColor("#333333"), 2))  # Thicker pen for the arm
-        painter.drawLine(28, 32, 48, 40)  # Draw the arm from center to edge
-        # Draw the arm head
+        painter.setPen(QPen(QColor("#333333"), 2))  
+        painter.drawLine(28, 32, 48, 40)  
+       
         painter.setBrush(QColor("#666666"))
-        painter.drawRect(46, 38, 6, 5)  # Magnetic head at end of arm
+        painter.drawRect(46, 38, 6, 5)  
 
-        # Add connector lines at bottom
-        painter.setPen(QPen(QColor("#333333"), 1))  # Reset to normal pen
+       
+        painter.setPen(QPen(QColor("#333333"), 1)) 
 
         painter.end()
         ds_icon.setPixmap(pixmap)
@@ -255,13 +254,13 @@ class MainWindow(QMainWindow):
         home_layout.addWidget(buttons_container)
         home_layout.addStretch()
         
-        # Create the Virtual Memory page
+      
         self.vm_page = self.create_virtual_memory_page()
         
-        # Create the Disk Scheduling page
+       
         self.ds_page = self.create_disk_scheduling_page()
         
-        # Add pages to stacked widget
+      
         self.stacked_widget.addWidget(home_page)
         self.stacked_widget.addWidget(self.vm_page)
         self.stacked_widget.addWidget(self.ds_page)
@@ -283,9 +282,9 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(20)
         
-        # Add back button at the top
+       
         back_button = QPushButton("Back to Home")
-        back_button.setFont(QFont("Segoe UI", 11))  # Correct size for a button
+        back_button.setFont(QFont("Segoe UI", 11)) 
         back_button.setStyleSheet("""
             QPushButton {
                 background-color: #455A64;
@@ -304,44 +303,43 @@ class MainWindow(QMainWindow):
             }
         """)
 
-        # Create a custom back arrow icon
+     
         arrow_icon = QPixmap(20, 20)
         arrow_icon.fill(Qt.GlobalColor.transparent)
         painter = QPainter(arrow_icon)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setPen(QPen(QColor("white"), 2))
-        # Draw arrow
-        painter.drawLine(15, 10, 5, 10)  # Horizontal line
-        painter.drawLine(5, 10, 10, 5)   # Upper diagonal
-        painter.drawLine(5, 10, 10, 15)  # Lower diagonal
+       
+        painter.drawLine(15, 10, 5, 10)  
+        painter.drawLine(5, 10, 10, 5)   
+        painter.drawLine(5, 10, 10, 15)  
         painter.end()
 
-        # Set the custom icon
+      
         back_button.setIcon(QIcon(arrow_icon))
         back_button.setIconSize(QSize(20, 20))
 
         layout.addWidget(back_button, alignment=Qt.AlignmentFlag.AlignLeft)
         back_button.clicked.connect(self.show_home)
         
-        # Create scroll area
+     
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         
-        # Create content widget
+     
         content_widget = QWidget()
         content_layout = QVBoxLayout(content_widget)
         content_layout.setContentsMargins(20, 20, 20, 20)
         content_layout.setSpacing(20)
-        
-        # Title
+      
         title = QLabel("Virtual Memory Algorithms")
         title.setFont(QFont("Segoe UI", 20, QFont.Weight.Bold))
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         content_layout.addWidget(title)
         
-        # Algorithm selection
+      
         algo_group = QButtonGroup()
         algo_frame = QFrame()
         algo_frame.setStyleSheet("""
@@ -370,7 +368,7 @@ class MainWindow(QMainWindow):
         
         content_layout.addWidget(algo_frame)
         
-        # Input fields
+       
         input_frame = QFrame()
         input_frame.setStyleSheet("""
             QFrame {
@@ -385,7 +383,7 @@ class MainWindow(QMainWindow):
         input_label.setFont(QFont("Segoe UI", 12, QFont.Weight.Bold))
         input_layout.addWidget(input_label)
         
-        # Frames input
+       
         frames_layout = QHBoxLayout()
         frames_label = QLabel("Number of Frames:")
         frames_label.setFont(QFont("Segoe UI", 11))
@@ -402,7 +400,7 @@ class MainWindow(QMainWindow):
         frames_layout.addWidget(self.frames_input)
         input_layout.addLayout(frames_layout)
         
-        # Reference string input
+      
         ref_layout = QHBoxLayout()
         ref_label = QLabel("Reference String (comma-separated):")
         ref_label.setFont(QFont("Segoe UI", 11))
@@ -421,7 +419,7 @@ class MainWindow(QMainWindow):
         
         content_layout.addWidget(input_frame)
         
-        # Buttons
+       
         buttons_layout = QHBoxLayout()
         self.vm_run_button = QPushButton("Run Simulation")
         self.vm_run_button.setFont(QFont("Segoe UI", 11))
@@ -457,7 +455,7 @@ class MainWindow(QMainWindow):
         buttons_layout.addWidget(self.vm_reset_button)
         content_layout.addLayout(buttons_layout)
         
-        # Results area
+      
         results_frame = QFrame()
         results_frame.setStyleSheet("""
             QFrame {
@@ -468,16 +466,16 @@ class MainWindow(QMainWindow):
             }
         """)
         results_layout = QVBoxLayout(results_frame)
-        results_layout.setSpacing(20)  # Increased spacing
+        results_layout.setSpacing(20) 
 
         results_label = QLabel("Results:")
-        results_label.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))  # Increased font size
+        results_label.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))  
         results_layout.addWidget(results_label)
 
         self.vm_results_text = QTextEdit()
         self.vm_results_text.setReadOnly(True)
-        self.vm_results_text.setMinimumHeight(180)  # Set minimum height
-        self.vm_results_text.setFont(QFont("Consolas", 12))  # Use monospace font for better readability
+        self.vm_results_text.setMinimumHeight(180)  
+        self.vm_results_text.setFont(QFont("Consolas", 12))  #
         self.vm_results_text.setStyleSheet("""
             QTextEdit {
                 background-color: white;
@@ -490,15 +488,15 @@ class MainWindow(QMainWindow):
         """)
         results_layout.addWidget(self.vm_results_text)
         
-        # Visualization area
+      
         self.vm_visualization_widget = QWidget()
         self.vm_visualization_widget.setMinimumHeight(400)
-        self.vm_visualization_widget.setLayout(QVBoxLayout())  # Initialize layout
+        self.vm_visualization_widget.setLayout(QVBoxLayout()) 
         results_layout.addWidget(self.vm_visualization_widget)
         
         content_layout.addWidget(results_frame)
         
-        # Set up scroll area
+       
         scroll.setWidget(content_widget)
         layout.addWidget(scroll)
         
@@ -510,9 +508,9 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(20)
         
-        # Add back button at the top for disk scheduling page
+      
         back_button = QPushButton("Back to Home")
-        back_button.setFont(QFont("Segoe UI", 11))  # Correct size for a button
+        back_button.setFont(QFont("Segoe UI", 11)) 
         back_button.setStyleSheet("""
             QPushButton {
                 background-color: #455A64;
@@ -531,44 +529,44 @@ class MainWindow(QMainWindow):
             }
         """)
 
-        # Create a custom back arrow icon
+       
         arrow_icon = QPixmap(20, 20)
         arrow_icon.fill(Qt.GlobalColor.transparent)
         painter = QPainter(arrow_icon)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setPen(QPen(QColor("white"), 2))
-        # Draw arrow
-        painter.drawLine(15, 10, 5, 10)  # Horizontal line
-        painter.drawLine(5, 10, 10, 5)   # Upper diagonal
-        painter.drawLine(5, 10, 10, 15)  # Lower diagonal
+    
+        painter.drawLine(15, 10, 5, 10)  
+        painter.drawLine(5, 10, 10, 5)   
+        painter.drawLine(5, 10, 10, 15) 
         painter.end()
 
-        # Set the custom icon
+        
         back_button.setIcon(QIcon(arrow_icon))
         back_button.setIconSize(QSize(20, 20))
 
         layout.addWidget(back_button, alignment=Qt.AlignmentFlag.AlignLeft)
         back_button.clicked.connect(self.show_home)
         
-        # Create scroll area
+       
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         
-        # Create content widget
+        
         content_widget = QWidget()
         content_layout = QVBoxLayout(content_widget)
         content_layout.setContentsMargins(20, 20, 20, 20)
         content_layout.setSpacing(20)
         
-        # Title
+        
         title = QLabel("Disk Scheduling Algorithms")
         title.setFont(QFont("Segoe UI", 20, QFont.Weight.Bold))
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         content_layout.addWidget(title)
         
-        # Algorithm selection
+        
         algo_group = QButtonGroup()
         algo_frame = QFrame()
         algo_frame.setStyleSheet("""
@@ -597,7 +595,7 @@ class MainWindow(QMainWindow):
         
         content_layout.addWidget(algo_frame)
         
-        # Input fields
+     
         input_frame = QFrame()
         input_frame.setStyleSheet("""
             QFrame {
@@ -612,7 +610,7 @@ class MainWindow(QMainWindow):
         input_label.setFont(QFont("Segoe UI", 12, QFont.Weight.Bold))
         input_layout.addWidget(input_label)
         
-        # Cylinders input
+       
         cyl_layout = QHBoxLayout()
         cyl_label = QLabel("Number of Cylinders:")
         cyl_label.setFont(QFont("Segoe UI", 11))
@@ -629,7 +627,7 @@ class MainWindow(QMainWindow):
         cyl_layout.addWidget(self.cylinders_input)
         input_layout.addLayout(cyl_layout)
         
-        # Current position input
+       
         pos_layout = QHBoxLayout()
         pos_label = QLabel("Current Position:")
         pos_label.setFont(QFont("Segoe UI", 11))
@@ -646,7 +644,7 @@ class MainWindow(QMainWindow):
         pos_layout.addWidget(self.current_pos_input)
         input_layout.addLayout(pos_layout)
         
-        # Queue input
+        
         queue_layout = QHBoxLayout()
         queue_label = QLabel("Request Queue (comma-separated):")
         queue_label.setFont(QFont("Segoe UI", 11))
@@ -665,7 +663,7 @@ class MainWindow(QMainWindow):
         
         content_layout.addWidget(input_frame)
         
-        # Buttons
+        
         buttons_layout = QHBoxLayout()
         self.ds_run_button = QPushButton("Run Simulation")
         self.ds_run_button.setFont(QFont("Segoe UI", 11))
@@ -701,7 +699,7 @@ class MainWindow(QMainWindow):
         buttons_layout.addWidget(self.ds_reset_button)
         content_layout.addLayout(buttons_layout)
         
-        # Results area
+        
         results_frame = QFrame()
         results_frame.setStyleSheet("""
             QFrame {
@@ -712,16 +710,16 @@ class MainWindow(QMainWindow):
             }
         """)
         results_layout = QVBoxLayout(results_frame)
-        results_layout.setSpacing(20)  # Increased spacing
+        results_layout.setSpacing(20) 
 
         results_label = QLabel("Results:")
-        results_label.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))  # Increased font size
+        results_label.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))  
         results_layout.addWidget(results_label)
 
         self.ds_results_text = QTextEdit()
         self.ds_results_text.setReadOnly(True)
-        self.ds_results_text.setMinimumHeight(180)  # Set minimum height
-        self.ds_results_text.setFont(QFont("Consolas", 12))  # Use monospace font for better readability
+        self.ds_results_text.setMinimumHeight(180)  
+        self.ds_results_text.setFont(QFont("Consolas", 12))  
         self.ds_results_text.setStyleSheet("""
             QTextEdit {
                 background-color: white;
@@ -734,15 +732,15 @@ class MainWindow(QMainWindow):
         """)
         results_layout.addWidget(self.ds_results_text)
         
-        # Visualization area
+        
         self.ds_visualization_widget = QWidget()
         self.ds_visualization_widget.setMinimumHeight(400)
-        self.ds_visualization_widget.setLayout(QVBoxLayout())  # Initialize layout
+        self.ds_visualization_widget.setLayout(QVBoxLayout()) 
         results_layout.addWidget(self.ds_visualization_widget)
         
         content_layout.addWidget(results_frame)
         
-        # Set up scroll area
+        
         scroll.setWidget(content_widget)
         layout.addWidget(scroll)
         
@@ -754,7 +752,20 @@ class MainWindow(QMainWindow):
             if frames <= 0:
                 raise ValueError("Number of frames must be positive")
             
-            ref_string = [int(x.strip()) for x in self.ref_input.text().split(',')]
+            ref_string_text = self.ref_input.text().strip()
+            if not ref_string_text:
+                raise ValueError("Reference string cannot be empty")
+            if ref_string_text.startswith(',') or ref_string_text.endswith(','):
+                raise ValueError("Reference string should not start or end with a comma")
+            if ',,' in ref_string_text:
+                raise ValueError("Reference string should not contain consecutive commas")
+            
+            ref_string_parts = ref_string_text.split(',')
+            for part in ref_string_parts:
+                if not part.strip().isdigit():
+                    raise ValueError("Reference string must contain only numbers")
+            
+            ref_string = [int(x.strip()) for x in ref_string_parts]
             if not all(x >= 0 for x in ref_string):
                 raise ValueError("Reference string values must be non-negative")
             
@@ -785,102 +796,102 @@ class MainWindow(QMainWindow):
         self.visualize_vm_results(results)
 
     def visualize_vm_results(self, results):
-        # Clear previous visualization
+      
         for i in reversed(range(self.vm_visualization_widget.layout().count())): 
             self.vm_visualization_widget.layout().itemAt(i).widget().setParent(None)
         
-        # Create new figure with two subplots
-        fig = plt.figure(figsize=(16, 10))  # Increased figure size
         
-        # Main grid subplot
-        ax1 = plt.subplot2grid((5, 1), (0, 0), rowspan=4)  # Increased rowspan
+        fig = plt.figure(figsize=(16, 10))  
+        
+      
+        ax1 = plt.subplot2grid((5, 1), (0, 0), rowspan=4)  
         sequence = results['sequence']
         frames = len(sequence[0])
         steps = len(sequence)
         access_type = results['access_type']
         ref_string = results['ref_string']
         
-        # Check if this is Second Chance algorithm
+        
         is_second_chance = 'reference_bits' in results
         ref_bits = results.get('reference_bits', None)
         
-        # Create a grid with more padding
-        ax1.set_xlim(-1, steps)  # Added padding on both sides
-        ax1.set_ylim(frames - 0.5, -2.2 if is_second_chance else -1.8)  # Extra space for ref bits
+       
+        ax1.set_xlim(-1, steps)  
+        ax1.set_ylim(frames - 0.5, -2.2 if is_second_chance else -1.8)  
         
-        # Remove axis lines and ticks but keep bottom border
+      
         ax1.spines['top'].set_visible(False)
         ax1.spines['right'].set_visible(False)
-        ax1.spines['bottom'].set_visible(True)  # Keep bottom border
+        ax1.spines['bottom'].set_visible(True)  
         ax1.spines['left'].set_visible(False)
         ax1.set_xticks([])
         ax1.set_yticks([])
         
-        # Plot reference string and hit/fault indicators at the top
+       
         for i in range(steps):
-            # Status indicator
+           
             color = '#117711' if access_type[i] else '#990000'
             indicator = 'H' if access_type[i] else 'F'
             ax1.text(i, -1.2, indicator, ha='center', va='center', 
                     fontsize=12, color=color, fontweight='bold')
             
-            # Reference string - show the actual reference value
+          
             ref_value = ref_string[i] if i < len(ref_string) else sequence[i][-1]
             ax1.text(i, -0.8, str(ref_value), ha='center', va='center',
                     fontsize=12, fontweight='bold')
         
-        # Plot grid cells with pages
+        
         for step in range(steps):
             for frame in range(frames):
                 page = sequence[step][frame]
                 if page is not None:
-                    # Draw cell with brighter colors
-                    color = '#AAFFAA' if access_type[step] else '#FFAAAA'  # Lighter pastel colors
+                  
+                    color = '#AAFFAA' if access_type[step] else '#FFAAAA' 
                     rect = plt.Rectangle((step - 0.4, frame - 0.4), 0.8, 0.8, 
                                       fill=True, facecolor=color, 
                                       edgecolor='black', alpha=0.7)
                     ax1.add_patch(rect)
-                    # Add page number
+                    
                     ax1.text(step, frame, str(page), ha='center', va='center', 
                            fontsize=12, fontweight='bold')
                     
-                    # Add reference bit indicator for Second Chance
+                  
                     if is_second_chance and ref_bits and ref_bits[step][frame] == 1:
                         ax1.text(step + 0.3, frame - 0.3, "★", ha='center', va='center',
                                 fontsize=8, color='#0000FF')
                 
-                # Draw cell borders
+             
                 rect = plt.Rectangle((step - 0.5, frame - 0.5), 1, 1, 
                                    fill=False, edgecolor='black', linewidth=0.5)
                 ax1.add_patch(rect)
         
-        # Add labels with more spacing
+       
         ax1.text(-0.8, -0.8, "Ref:", ha='right', va='center', fontsize=12, fontweight='bold')
         ax1.text(-0.8, -1.2, "Status:", ha='right', va='center', fontsize=12, fontweight='bold')
         
-        # Add legend subplot
+      
         ax2 = plt.subplot2grid((5, 1), (4, 0))
         ax2.axis('off')
         
-        # Create legend boxes with more spacing
-        legend_x = 0.2  # Moved legend more to the left
+        
+        legend_x = 0.2  
         ax2.add_patch(plt.Rectangle((legend_x, 0.5), 0.1, 0.3, facecolor='#AAFFAA', alpha=0.7))
         ax2.text(legend_x + 0.15, 0.65, "Hit", va='center', fontsize=12)
         
         ax2.add_patch(plt.Rectangle((legend_x + 0.3, 0.5), 0.1, 0.3, facecolor='#FFAAAA', alpha=0.7))
         ax2.text(legend_x + 0.45, 0.65, "Fault", va='center', fontsize=12)
         
-        # Add Second Chance specific legend
+       
         if is_second_chance:
             ax2.text(legend_x + 0.7, 0.65, "★ = Second Chance (Ref bit = 1)", va='center', fontsize=12, color='#0000FF')
         
-        # Set aspect ratio to be equal for main grid
+       
         ax1.set_aspect('equal')
         
-        # Adjust layout with more padding
-        plt.subplots_adjust(left=0.1, right=0.9, top=0.95, bottom=0.1, hspace=0.2)  # Increased hspace
+       
+        plt.subplots_adjust(left=0.1, right=0.9, top=0.95, bottom=0.1, hspace=0.2)  
         
-        # Create canvas and add to widget
+       
         canvas = FigureCanvas(fig)
         self.vm_visualization_widget.layout().addWidget(canvas)
         canvas.draw()
@@ -891,25 +902,42 @@ class MainWindow(QMainWindow):
         self.vm_results_text.clear()
         self.fifo_radio.setChecked(True)
         
-        # Clear visualization
+      
         for i in reversed(range(self.vm_visualization_widget.layout().count())): 
             self.vm_visualization_widget.layout().itemAt(i).widget().setParent(None)
 
     def run_ds_simulation(self):
         try:
+            if not self.cylinders_input.text().strip().isdigit():
+                raise ValueError("Number of cylinders must contain only numbers")
             cylinders = int(self.cylinders_input.text())
-            current_pos = int(self.current_pos_input.text())
-            queue = [int(x.strip()) for x in self.queue_input.text().split(',')]
-            
             if cylinders <= 0:
                 raise ValueError("Number of cylinders must be positive")
+
+            if not self.current_pos_input.text().strip().isdigit():
+                raise ValueError("Current position must contain only numbers")
+            current_pos = int(self.current_pos_input.text())
             if current_pos < 0 or current_pos >= cylinders:
                 raise ValueError("Current position must be between 0 and number of cylinders")
+                
+            queue_text = self.queue_input.text().strip()
+            if not queue_text:
+                raise ValueError("Request queue cannot be empty")
+            if queue_text.startswith(',') or queue_text.endswith(','):
+                raise ValueError("Request queue should not start or end with a comma")
+            if ',,' in queue_text:
+                raise ValueError("Request queue should not contain consecutive commas")
+            
+            queue_parts = queue_text.split(',')
+            for part in queue_parts:
+                if not part.strip().isdigit():
+                    raise ValueError("Request queue must contain only numbers")
+            queue = [int(x.strip()) for x in queue_parts]
             if not all(0 <= x < cylinders for x in queue):
                 raise ValueError("All queue values must be between 0 and number of cylinders")
             
             algorithm = "SCAN" if self.scan_radio.isChecked() else "LOOK"
-            direction = "right"  # Default direction
+            direction = "right"  
             
             if algorithm == "SCAN":
                 results = SCAN(queue, current_pos, cylinders, direction)
@@ -930,11 +958,11 @@ class MainWindow(QMainWindow):
         self.visualize_ds_results(results)
 
     def visualize_ds_results(self, results):
-        # Clear previous visualization
+       
         for i in reversed(range(self.ds_visualization_widget.layout().count())): 
             self.ds_visualization_widget.layout().itemAt(i).widget().setParent(None)
         
-        # Create new figure
+       
         fig = plt.figure(figsize=(12, 6))
         canvas = FigureCanvas(fig)
         self.ds_visualization_widget.layout().addWidget(canvas)
@@ -942,39 +970,39 @@ class MainWindow(QMainWindow):
         ax = fig.add_subplot(111)
         sequence = results['sequence']
         
-        # Get the full range of cylinders
+     
         cylinders = int(self.cylinders_input.text())
         
-        # Create positions list including 0 and max cylinder
+       
         positions = sorted(set([0, cylinders - 1] + list(sequence)))
         x_positions = np.linspace(0, 1, len(positions))
         pos_to_x = dict(zip(positions, x_positions))
         
-        # Add cylinder numbers at the top
+        
         for pos, x in zip(positions, x_positions):
             ax.text(x, 1.1, str(pos), ha='center', va='bottom', color='orange', fontsize=10)
         
-        # Plot the movement pattern
+       
         x_coords = []
         y_coords = []
-        y_spacing = 0.05  # Vertical spacing between points
-        current_y = 0.8  # Starting y position
+        y_spacing = 0.05  
+        current_y = 0.8 
         
-        # First point
+        
         x_coords.append(pos_to_x[sequence[0]])
         y_coords.append(current_y)
         
-        # Plot each segment
+       
         for i in range(1, len(sequence)):
             current_y -= y_spacing
             x_coords.append(pos_to_x[sequence[i]])
             y_coords.append(current_y)
         
-        # Plot lines and dots
+      
         ax.plot(x_coords, y_coords, 'k-', linewidth=1)
         ax.plot(x_coords, y_coords, 'ko', markersize=8)
         
-        # Clean up the plot
+       
         ax.set_xticks([])
         ax.set_yticks([])
         ax.spines['top'].set_visible(False)
@@ -982,11 +1010,11 @@ class MainWindow(QMainWindow):
         ax.spines['bottom'].set_visible(False)
         ax.spines['left'].set_visible(False)
         
-        # Set view limits
+        
         ax.set_xlim(-0.05, 1.05)
         ax.set_ylim(0.2, 1.2)
         
-        # Adjust layout
+        
         plt.subplots_adjust(left=0.02, right=0.98, top=0.95, bottom=0.05)
         
         canvas.draw()
@@ -1005,7 +1033,7 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     
-    # Apply material design theme
+    
     apply_stylesheet(app, theme='light_blue.xml')
     
     window = MainWindow()
